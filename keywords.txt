@@ -1,0 +1,30 @@
+  
+#######################################
+# Syntax Coloring Map For Grove Temperature sensor MCP9600
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+KEYWORD1    MCP99600
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+KEYWORD2    set_alert_limit
+KEYWORD2    set_alert_hys
+KEYWORD2    set_alert_bit
+KEYWORD2    clear_int_flag
+KEYWORD2    set_alert_mode_bit
+KEYWORD2    set_alert_enable
+KEYWORD2    init
+KEYWORD2    set_cold_junc_resolution
+KEYWORD2    set_ADC_meas_resolution
+KEYWORD2    set_burst_mode_samp
+KEYWORD2    set_sensor_mode
+KEYWORD2    check_data_update
+
+#######################################
+# Constants (LITERAL1)
+#######################################
