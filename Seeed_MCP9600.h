@@ -54,7 +54,7 @@ typedef enum
     ERROR_PARAM=-1,
     ERROR_COMM =-2,
     ERROR_OTHERS=-128,
-}error_t;
+}err_t;
 
 #define HOT_JUNCTION_REG_ADDR               0X0
 #define JUNCTION_TEMP_DELTA_REG_ADDR        0X1
@@ -148,12 +148,12 @@ class IIC_OPRTS
 {
     public:
         void IIC_begin(){Wire.begin();}
-        s32 IIC_write_byte(u8 reg,u8 byte);
-        s32 IIC_read_byte(u8 reg,u8* byte);
+        err_t IIC_write_byte(u8 reg,u8 byte);
+        err_t IIC_read_byte(u8 reg,u8* byte);
         void set_iic_addr(u8 IIC_ADDR);
-        s32 IIC_read_16bit(u8 start_reg,u16 *value);
-        s32 IIC_write_16bit(u8 reg,u16 value);
-        s32 IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len);
+        err_t IIC_read_16bit(u8 start_reg,u16 *value);
+        err_t IIC_write_16bit(u8 reg,u16 value);
+        err_t IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len);
     private:
         u8 _IIC_ADDR;
 };
@@ -164,45 +164,45 @@ class MCP9600:public IIC_OPRTS
     public:
         MCP9600(u8 IIC_ADDR=DEFAULT_IIC_ADDR);
         ~MCP9600(){};
-        error_t init(u8 therm_type);
-        error_t read_version(u16 *ver);
+        err_t init(u8 therm_type);
+        err_t read_version(u16 *ver);
         
-        error_t read_hot_junc(float *value);
-        error_t read_junc_temp_delta(float *value);
-        error_t read_cold_junc(float *value);
-        error_t read_ADC_data(u8* data,u32 data_len);      
-        error_t read_status(u8* byte);
+        err_t read_hot_junc(float *value);
+        err_t read_junc_temp_delta(float *value);
+        err_t read_cold_junc(float *value);
+        err_t read_ADC_data(u8* data,u32 data_len);      
+        err_t read_status(u8* byte);
 
-        error_t set_therm_cfg(u8 set_byte);
-        error_t read_therm_cfg(u8* byte);
-        error_t set_therm_type(u8 set_byte);
-        error_t set_filt_coefficients(u8 set_byte);
+        err_t set_therm_cfg(u8 set_byte);
+        err_t read_therm_cfg(u8* byte);
+        err_t set_therm_type(u8 set_byte);
+        err_t set_filt_coefficients(u8 set_byte);
 
-        error_t set_dev_cfg(u8 set_byte);
-        error_t read_dev_cfg(u8* byte);
-        error_t set_sensor_mode(u8 set_byte);
-        error_t set_burst_mode_samp(u8 set_byte);
-        error_t set_ADC_meas_resolution(u8 set_byte);
-        error_t set_cold_junc_resolution(u8 set_byte);
+        err_t set_dev_cfg(u8 set_byte);
+        err_t read_dev_cfg(u8* byte);
+        err_t set_sensor_mode(u8 set_byte);
+        err_t set_burst_mode_samp(u8 set_byte);
+        err_t set_ADC_meas_resolution(u8 set_byte);
+        err_t set_cold_junc_resolution(u8 set_byte);
 
-        error_t set_alert_limit(u8 alert_num,u16 value);
-        error_t set_alert_hys(u8 alert_num,u16 value);
+        err_t set_alert_limit(u8 alert_num,u16 value);
+        err_t set_alert_hys(u8 alert_num,u16 value);
 
         
-        error_t set_alert_cfg(u8 alert_num,u8 set_byte);
-        error_t read_alert_cfg(u8 alert_num,u8 *byte);
+        err_t set_alert_cfg(u8 alert_num,u8 set_byte);
+        err_t read_alert_cfg(u8 alert_num,u8 *byte);
 
-        error_t clear_int_flag(u8 alert_num);
-        error_t set_alert_for_TH_or_TC(u8 alert_num,u8 set_byte);
-        error_t set_alert_limit_direction(u8 alert_num,u8 set_byte);
-        error_t set_alert_bit(u8 alert_num,u8 set_byte);
-        error_t set_alert_mode_bit(u8 alert_num,u8 set_byte);
-        error_t set_alert_enable(u8 alert_num,u8 set_byte);
+        err_t clear_int_flag(u8 alert_num);
+        err_t set_alert_for_TH_or_TC(u8 alert_num,u8 set_byte);
+        err_t set_alert_limit_direction(u8 alert_num,u8 set_byte);
+        err_t set_alert_bit(u8 alert_num,u8 set_byte);
+        err_t set_alert_mode_bit(u8 alert_num,u8 set_byte);
+        err_t set_alert_enable(u8 alert_num,u8 set_byte);
 
         u16 covert_temp_to_reg_form(float temp);
         
-        error_t check_data_update(bool *stat);
-        error_t read_INT_stat(u8 *stat);
+        err_t check_data_update(bool *stat);
+        err_t read_INT_stat(u8 *stat);
     private:
 
 };

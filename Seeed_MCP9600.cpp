@@ -42,9 +42,9 @@ MCP9600::MCP9600(u8 IIC_ADDR)
  * @param therm_type
  * @return 0 if successed.
  * */
-error_t MCP9600::init(u8 therm_type)
+err_t MCP9600::init(u8 therm_type)
 {
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     u16 ver;
     IIC_begin();
     ret=read_version(&ver);
@@ -66,7 +66,7 @@ error_t MCP9600::init(u8 therm_type)
  * @param ver.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_version(u16 *ver)
+err_t MCP9600::read_version(u16 *ver)
 {
     if(IIC_read_16bit(VERSION_ID_REG_ADDR,ver))
     {
@@ -79,7 +79,7 @@ error_t MCP9600::read_version(u16 *ver)
  * @param value: result.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_hot_junc(float *value)
+err_t MCP9600::read_hot_junc(float *value)
 {
     *value=0;
     u16 read_value=0;
@@ -105,7 +105,7 @@ error_t MCP9600::read_hot_junc(float *value)
  * @param value: result.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_junc_temp_delta(float *value)
+err_t MCP9600::read_junc_temp_delta(float *value)
 {
     *value=0;
     u16 read_value=0;
@@ -128,7 +128,7 @@ error_t MCP9600::read_junc_temp_delta(float *value)
  * @param value: result.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_cold_junc(float *value)
+err_t MCP9600::read_cold_junc(float *value)
 {
     *value=0;
     u16 read_value=0;
@@ -154,7 +154,7 @@ error_t MCP9600::read_cold_junc(float *value)
  * @param data_len
  * @return 0 if successed.
  * */
-error_t MCP9600::read_ADC_data(u8* data,u32 data_len)
+err_t MCP9600::read_ADC_data(u8* data,u32 data_len)
 {
     if(IIC_read_bytes(RAW_ADC_DATA_REG_ADDR,data,data_len))
     {
@@ -167,7 +167,7 @@ error_t MCP9600::read_ADC_data(u8* data,u32 data_len)
  * @param byte: result.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_status(u8* byte)
+err_t MCP9600::read_status(u8* byte)
 {
     *byte=0;
     if(IIC_read_byte(STAT_REG_ADDR,byte))
@@ -181,7 +181,7 @@ error_t MCP9600::read_status(u8* byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_therm_cfg(u8 set_byte)
+err_t MCP9600::set_therm_cfg(u8 set_byte)
 {
     if(IIC_write_byte(THERM_SENS_CFG_REG_ADDR,set_byte))
     {
@@ -195,7 +195,7 @@ error_t MCP9600::set_therm_cfg(u8 set_byte)
  * @param byte: result.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_therm_cfg(u8* byte)
+err_t MCP9600::read_therm_cfg(u8* byte)
 {
     if(IIC_read_byte(THERM_SENS_CFG_REG_ADDR,byte))
     {
@@ -208,7 +208,7 @@ error_t MCP9600::read_therm_cfg(u8* byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_therm_type(u8 set_byte)
+err_t MCP9600::set_therm_type(u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -227,7 +227,7 @@ error_t MCP9600::set_therm_type(u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_filt_coefficients(u8 set_byte)
+err_t MCP9600::set_filt_coefficients(u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -248,7 +248,7 @@ error_t MCP9600::set_filt_coefficients(u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_dev_cfg(u8 set_byte)
+err_t MCP9600::set_dev_cfg(u8 set_byte)
 {
     if(IIC_write_byte(DEVICE_CFG_REG_ADDR,set_byte))
     {
@@ -261,7 +261,7 @@ error_t MCP9600::set_dev_cfg(u8 set_byte)
  * @param byte: the byte to be read in.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_dev_cfg(u8* byte)
+err_t MCP9600::read_dev_cfg(u8* byte)
 {
     if(IIC_read_byte(DEVICE_CFG_REG_ADDR,byte))
     {
@@ -274,7 +274,7 @@ error_t MCP9600::read_dev_cfg(u8* byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_sensor_mode(u8 set_byte)
+err_t MCP9600::set_sensor_mode(u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -290,7 +290,7 @@ error_t MCP9600::set_sensor_mode(u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_burst_mode_samp(u8 set_byte)
+err_t MCP9600::set_burst_mode_samp(u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -307,7 +307,7 @@ error_t MCP9600::set_burst_mode_samp(u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_ADC_meas_resolution(u8 set_byte)
+err_t MCP9600::set_ADC_meas_resolution(u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -323,7 +323,7 @@ error_t MCP9600::set_ADC_meas_resolution(u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_cold_junc_resolution(u8 set_byte)
+err_t MCP9600::set_cold_junc_resolution(u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -340,7 +340,7 @@ error_t MCP9600::set_cold_junc_resolution(u8 set_byte)
  * @param value: the 16bit value to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_limit(u8 alert_num,u16 value)
+err_t MCP9600::set_alert_limit(u8 alert_num,u16 value)
 {
     if(IIC_write_16bit(TEMP_ALERT1_LIMIT_REG_ADDR+alert_num,value))
     {
@@ -354,7 +354,7 @@ error_t MCP9600::set_alert_limit(u8 alert_num,u16 value)
  * @param set_byte: the byte to be set..
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_hys(u8 alert_num,u16 value)
+err_t MCP9600::set_alert_hys(u8 alert_num,u16 value)
 {
     if(IIC_write_byte(ALERT1_HYS_REG_ADDR+alert_num,value))
     {
@@ -368,7 +368,7 @@ error_t MCP9600::set_alert_hys(u8 alert_num,u16 value)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_cfg(u8 alert_num,u8 set_byte)
+err_t MCP9600::set_alert_cfg(u8 alert_num,u8 set_byte)
 {
     return IIC_write_byte(ALERT1_CFG_REG_ADDR+alert_num,set_byte);
 }
@@ -378,7 +378,7 @@ error_t MCP9600::set_alert_cfg(u8 alert_num,u8 set_byte)
  * @param byte: the byte to be read in.
  * @return 0 if successed.
  * */
-error_t MCP9600::read_alert_cfg(u8 alert_num,u8 *byte)
+err_t MCP9600::read_alert_cfg(u8 alert_num,u8 *byte)
 {
     *byte=0;
     if(IIC_read_byte(ALERT1_CFG_REG_ADDR+alert_num,byte))
@@ -392,7 +392,7 @@ error_t MCP9600::read_alert_cfg(u8 alert_num,u8 *byte)
  * @param alert num the channel of alert
  * @return 0 if successed.
  * */
-error_t MCP9600::clear_int_flag(u8 alert_num)
+err_t MCP9600::clear_int_flag(u8 alert_num)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -410,7 +410,7 @@ error_t MCP9600::clear_int_flag(u8 alert_num)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_for_TH_or_TC(u8 alert_num,u8 set_byte)
+err_t MCP9600::set_alert_for_TH_or_TC(u8 alert_num,u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -427,7 +427,7 @@ error_t MCP9600::set_alert_for_TH_or_TC(u8 alert_num,u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_limit_direction(u8 alert_num,u8 set_byte)
+err_t MCP9600::set_alert_limit_direction(u8 alert_num,u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -444,7 +444,7 @@ error_t MCP9600::set_alert_limit_direction(u8 alert_num,u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_bit(u8 alert_num,u8 set_byte)
+err_t MCP9600::set_alert_bit(u8 alert_num,u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -464,7 +464,7 @@ error_t MCP9600::set_alert_bit(u8 alert_num,u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_mode_bit(u8 alert_num,u8 set_byte)
+err_t MCP9600::set_alert_mode_bit(u8 alert_num,u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -482,7 +482,7 @@ error_t MCP9600::set_alert_mode_bit(u8 alert_num,u8 set_byte)
  * @param set_byte: the byte to be set.
  * @return 0 if successed.
  * */
-error_t MCP9600::set_alert_enable(u8 alert_num,u8 set_byte)
+err_t MCP9600::set_alert_enable(u8 alert_num,u8 set_byte)
 {
     u8 therm_cfg_data=0;
     u8 byte_to_set=0;
@@ -500,10 +500,10 @@ error_t MCP9600::set_alert_enable(u8 alert_num,u8 set_byte)
  * @param stat :indicate if data ready
  * @return 0 if successed.
  * */
-error_t MCP9600::check_data_update(bool *stat)
+err_t MCP9600::check_data_update(bool *stat)
 {
     *stat=0;
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     u8 byte=0;
     CHECK_RESULT(ret,read_status(&byte));
     if(byte&0x40)
@@ -522,10 +522,10 @@ error_t MCP9600::check_data_update(bool *stat)
  * @param stat :indicate if any interruption is generated
  * @return 0 if successed.
  * */
-error_t MCP9600::read_INT_stat(u8 *stat)
+err_t MCP9600::read_INT_stat(u8 *stat)
 {
     *stat=0;
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     u8 byte=0;
     CHECK_RESULT(ret,read_status(&byte));
     for(int i=0;i<4;i++)
@@ -576,12 +576,17 @@ u16 MCP9600::covert_temp_to_reg_form(float temp)
  * @param byte :The byte to be wrote.
  * @return result of operation,non-zero if failed.
  * */
-s32 IIC_OPRTS::IIC_write_byte(u8 reg,u8 byte)
+err_t IIC_OPRTS::IIC_write_byte(u8 reg,u8 byte)
 {
+    s32 ret=0;
     Wire.beginTransmission(_IIC_ADDR);
     Wire.write(reg);
     Wire.write(byte);
-    return Wire.endTransmission();
+    ret=Wire.endTransmission();
+    if(!ret)
+        return NO_ERROR;
+    else
+        return ERROR_COMM;
 }
 
 
@@ -590,14 +595,19 @@ s32 IIC_OPRTS::IIC_write_byte(u8 reg,u8 byte)
  * @param value: The 16bit value to be wrote .
  * @return result of operation,non-zero if failed.
  * */
-s32 IIC_OPRTS::IIC_write_16bit(u8 reg,u16 value)
+err_t IIC_OPRTS::IIC_write_16bit(u8 reg,u16 value)
 {
+    s32 ret=0;
     Wire.beginTransmission(_IIC_ADDR);
     Wire.write(reg);
     
     Wire.write((u8)(value>>8));
     Wire.write((u8)value);
-    return Wire.endTransmission();
+    ret=Wire.endTransmission();
+    if(!ret)
+        return NO_ERROR;
+    else
+        return ERROR_COMM;
 }
 
 
@@ -607,8 +617,9 @@ s32 IIC_OPRTS::IIC_write_16bit(u8 reg,u16 value)
  * @param byte: The byte to be read in.
  * @return result of operation,non-zero if failed.
  * */
-s32 IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
+err_t IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
 {
+    err_t ret=NO_ERROR;
     u32 time_out_count=0;
     Wire.beginTransmission(_IIC_ADDR);
     Wire.write(reg);
@@ -618,11 +629,11 @@ s32 IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
     while(1!=Wire.available())
     {
         time_out_count++;
-        if(time_out_count>10)  return -1;
+        if(time_out_count>10)  return ERROR_COMM;
         delay(1);
     }
     *byte=Wire.read();
-    return 0;
+    return NO_ERROR;
 }
 
 /**@brief I2C read 16bit value
@@ -630,8 +641,9 @@ s32 IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
  * @param byte: The 16bit value to be read in.
  * @return result of operation,non-zero if failed.
  * */
-s32 IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
+err_t IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
 {
+    err_t ret=NO_ERROR;
     u32 time_out_count=0;
     u8 val=0;
     *value=0;
@@ -643,14 +655,14 @@ s32 IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
     while(sizeof(u16)!=Wire.available())
     {
         time_out_count++;
-        if(time_out_count>10)  return -1;
+        if(time_out_count>10)  return ERROR_COMM;
         delay(1);
     }
     val=Wire.read();
     *value|=(u16)val<<8;
     val=Wire.read();
     *value|=val;
-    return 0;
+    return NO_ERROR;
 }
 
 
@@ -660,8 +672,9 @@ s32 IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
  * @param data_len: The length of buf need to read in.
  * @return result of operation,non-zero if failed.
  * */
-s32 IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
+err_t IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
 {
+    err_t ret=NO_ERROR;
     u32 time_out_count=0;
     Wire.beginTransmission(_IIC_ADDR);
     Wire.write(start_reg);
@@ -671,7 +684,7 @@ s32 IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
     while(data_len!=Wire.available())
     {
         time_out_count++;
-        if(time_out_count>10)  return -1;
+        if(time_out_count>10)  return ERROR_COMM;
         delay(1);
     }
     
@@ -679,7 +692,7 @@ s32 IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
     {
         data[i]=Wire.read();
     }
-    return 0;
+    return ret;
 }
 
 
