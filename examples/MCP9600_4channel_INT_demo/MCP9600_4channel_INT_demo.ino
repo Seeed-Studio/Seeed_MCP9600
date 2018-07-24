@@ -9,7 +9,7 @@ MCP9600 sensor;
  * */
 err_t sensor_INT_config()
 {
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     CHECK_RESULT(ret,sensor.set_filt_coefficients(FILT_MID));
 
     for(int i=0;i<4;i++)
@@ -47,7 +47,7 @@ err_t sensor_INT_config()
 
 err_t get_temperature(float *value)
 {
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     float hot_junc=0;
     float junc_delta=0;
     float cold_junc=0;
