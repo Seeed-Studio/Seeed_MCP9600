@@ -3,21 +3,21 @@
 
 MCP9600 sensor;
 
-error_t sensor_basic_config()
+err_t sensor_basic_config()
 {
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     CHECK_RESULT(ret,sensor.set_filt_coefficients(FILT_MID));
     CHECK_RESULT(ret,sensor.set_cold_junc_resolution(COLD_JUNC_RESOLUTION_0_25));
     CHECK_RESULT(ret,sensor.set_ADC_meas_resolution(ADC_14BIT_RESOLUTION));
     CHECK_RESULT(ret,sensor.set_burst_mode_samp(BURST_32_SAMPLE));
     CHECK_RESULT(ret,sensor.set_sensor_mode(NORMAL_OPERATION));
-    return NO_ERROR;
+    return ret;
 }
 
 
-error_t get_temperature(float *value)
+err_t get_temperature(float *value)
 {
-    s32 ret=0;
+    err_t ret=NO_ERROR;
     float hot_junc=0;
     float junc_delta=0;
     float cold_junc=0;
@@ -35,7 +35,7 @@ error_t get_temperature(float *value)
 
     *value=hot_junc;
 
-    return NO_ERROR;
+    return ret;
 }
 
 
