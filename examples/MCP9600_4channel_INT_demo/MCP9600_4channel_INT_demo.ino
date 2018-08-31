@@ -1,5 +1,41 @@
+/*
+ * MCP9600_4channel_INT_demo.ino
+ * Example for MCP9600
+ *  
+ * Copyright (c) 2018 Seeed Technology Co., Ltd.
+ * Website    : www.seeed.cc
+ * Author     : downey
+ * Create Time: May 2018
+ * Change Log :
+ *
+ * The MIT License (MIT)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 #include "Seeed_MCP9600.h"
 
+#ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
+  #define SERIAL SerialUSB
+#else
+  #define SERIAL Serial
+#endif
 
 MCP9600 sensor;
 
@@ -65,7 +101,7 @@ err_t get_temperature(float *value)
     }
     else
     {
-        Serial.println("data not ready!!");
+        SERIAL.println("data not ready!!");
     }
 
     return NO_ERROR;
@@ -74,12 +110,12 @@ err_t get_temperature(float *value)
 
 void setup()
 {
-    Serial.begin(115200);
+    SERIAL.begin(115200);
     delay(10);
-    Serial.println("serial start!!");
+    SERIAL.println("serial start!!");
     if(sensor.init(THER_TYPE_K))
     {
-        Serial.println("sensor init failed!!");
+        SERIAL.println("sensor init failed!!");
     }
     sensor_INT_config();
 }
@@ -94,13 +130,13 @@ void loop()
  
 
     get_temperature(&temp);
-    Serial.print("temperature ==============================>>");
-    Serial.println(temp);
+    SERIAL.print("temperature ==============================>>");
+    SERIAL.println(temp);
 
     sensor.read_INT_stat(&stat);
 
-    Serial.println(" ");
-    Serial.println(" ");
+    SERIAL.println(" ");
+    SERIAL.println(" ");
 
     delay(1000);
 }
