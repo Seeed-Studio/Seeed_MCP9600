@@ -1,6 +1,6 @@
 /*
  * Seeed_MCP9600.cpp
- * Driver for DIGITAL I2C HUMIDITY AND TEMPERATURE SENSOR
+ * Driver for MCP9600
  *  
  * Copyright (c) 2018 Seeed Technology Co., Ltd.
  * Website    : www.seeed.cc
