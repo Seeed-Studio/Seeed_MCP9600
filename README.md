@@ -1,7 +1,6 @@
 Grove Temperature sensor MCP9600
 ==============
 
-![MCP9600](https://user-images.githubusercontent.com/41441945/44902365-65a8bb80-ad3c-11e8-90ab-d915374bdc65.png)  
 
 Introduction of sensor
 ----------------------------  
