@@ -35,26 +35,41 @@
 #include <Arduino.h>
 
 
-#define CHECK_RESULT(a,b)   do{if(a=b)  {    \
-                            Serial.print(__FILE__);    \
-                            Serial.print(__LINE__);   \
-                            Serial.print(" error code =");  \
-                            Serial.println(a);                   \
-                            return a;   \
-                            }}while(0)
+#ifndef SEEED_DN_DEFINES
+#define SEEED_DN_DEFINES
 
-typedef int s32;
-typedef long unsigned int u32;
-typedef unsigned char u8;
+#ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
+  #define SERIAL_DB SerialUSB
+#else
+  #define SERIAL_DB Serial
+#endif
+
+
+typedef int            s32;
+typedef long unsigned int   u32;
+typedef short          s16;
 typedef unsigned short u16;
+typedef char           s8;
+typedef unsigned char  u8;
 
-typedef enum
+typedef enum	
 {
     NO_ERROR=0,
     ERROR_PARAM=-1,
     ERROR_COMM =-2,
     ERROR_OTHERS=-128,
 }err_t;
+
+
+#define CHECK_RESULT(a,b)   do{if(a=b)  {    \
+                            SERIAL_DB.print(__FILE__);    \
+                            SERIAL_DB.print(__LINE__);   \
+                            SERIAL_DB.print(" error code =");  \
+                            SERIAL_DB.println(a);                   \
+                            return a;   \
+                            }}while(0)
+
+#endif
 
 #define HOT_JUNCTION_REG_ADDR               0X0
 #define JUNCTION_TEMP_DELTA_REG_ADDR        0X1
@@ -144,7 +159,7 @@ typedef enum
 
 #define UPDATE_FLAG                         1<<6
 
-class IIC_OPRTS
+class MCP9600_IIC_OPRTS
 {
     public:
         void IIC_begin(){Wire.begin();}
@@ -159,7 +174,7 @@ class IIC_OPRTS
 };
 
 
-class MCP9600:public IIC_OPRTS
+class MCP9600:public MCP9600_IIC_OPRTS
 {
     public:
         MCP9600(u8 IIC_ADDR=DEFAULT_IIC_ADDR);

@@ -576,7 +576,7 @@ u16 MCP9600::covert_temp_to_reg_form(float temp)
  * @param byte :The byte to be wrote.
  * @return result of operation,non-zero if failed.
  * */
-err_t IIC_OPRTS::IIC_write_byte(u8 reg,u8 byte)
+err_t MCP9600_IIC_OPRTS::IIC_write_byte(u8 reg,u8 byte)
 {
     s32 ret=0;
     Wire.beginTransmission(_IIC_ADDR);
@@ -595,7 +595,7 @@ err_t IIC_OPRTS::IIC_write_byte(u8 reg,u8 byte)
  * @param value: The 16bit value to be wrote .
  * @return result of operation,non-zero if failed.
  * */
-err_t IIC_OPRTS::IIC_write_16bit(u8 reg,u16 value)
+err_t MCP9600_IIC_OPRTS::IIC_write_16bit(u8 reg,u16 value)
 {
     s32 ret=0;
     Wire.beginTransmission(_IIC_ADDR);
@@ -617,7 +617,7 @@ err_t IIC_OPRTS::IIC_write_16bit(u8 reg,u16 value)
  * @param byte: The byte to be read in.
  * @return result of operation,non-zero if failed.
  * */
-err_t IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
+err_t MCP9600_IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
 {
     err_t ret=NO_ERROR;
     u32 time_out_count=0;
@@ -641,7 +641,7 @@ err_t IIC_OPRTS::IIC_read_byte(u8 reg,u8* byte)
  * @param byte: The 16bit value to be read in.
  * @return result of operation,non-zero if failed.
  * */
-err_t IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
+err_t MCP9600_IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
 {
     err_t ret=NO_ERROR;
     u32 time_out_count=0;
@@ -672,7 +672,7 @@ err_t IIC_OPRTS::IIC_read_16bit(u8 start_reg,u16 *value)
  * @param data_len: The length of buf need to read in.
  * @return result of operation,non-zero if failed.
  * */
-err_t IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
+err_t MCP9600_IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
 {
     err_t ret=NO_ERROR;
     u32 time_out_count=0;
@@ -699,7 +699,7 @@ err_t IIC_OPRTS::IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len)
 /**@brief change the I2C address from default.
  * @param IIC_ADDR: I2C address to be set 
  * */
-void IIC_OPRTS::set_iic_addr(u8 IIC_ADDR)
+void MCP9600_IIC_OPRTS::set_iic_addr(u8 IIC_ADDR)
 {
     _IIC_ADDR=IIC_ADDR;
 }
