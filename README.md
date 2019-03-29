@@ -1,4 +1,4 @@
-Grove Temperature sensor MCP9600
+Grove - I2C Thermocouple Amplifier(MCP9600)
 ==============
 
 
