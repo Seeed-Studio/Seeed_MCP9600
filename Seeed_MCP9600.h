@@ -1,33 +1,33 @@
 /*
- * Seeed_MCP9600.h
- * Driver for mcp9600
- *  
- * Copyright (c) 2018 Seeed Technology Co., Ltd.
- * Website    : www.seeed.cc
- * Author     : downey
- * Create Time: May 2018
- * Change Log :
- *
- * The MIT License (MIT)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+    Seeed_MCP9600.h
+    Driver for mcp9600
+
+    Copyright (c) 2018 Seeed Technology Co., Ltd.
+    Website    : www.seeed.cc
+    Author     : downey
+    Create Time: May 2018
+    Change Log :
+
+    The MIT License (MIT)
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+*/
 #ifndef _SEEED_MCP9600_H
 #define _SEEED_MCP9600_H
 
@@ -39,9 +39,9 @@
 #define SEEED_DN_DEFINES
 
 #ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
-  #define SERIAL_DB SerialUSB
+    #define SERIAL_DB SerialUSB
 #else
-  #define SERIAL_DB Serial
+    #define SERIAL_DB Serial
 #endif
 
 
@@ -52,22 +52,21 @@ typedef unsigned short u16;
 typedef char           s8;
 typedef unsigned char  u8;
 
-typedef enum	
-{
-    NO_ERROR=0,
-    ERROR_PARAM=-1,
-    ERROR_COMM =-2,
-    ERROR_OTHERS=-128,
-}err_t;
+typedef enum {
+    NO_ERROR = 0,
+    ERROR_PARAM = -1,
+    ERROR_COMM = -2,
+    ERROR_OTHERS = -128,
+} err_t;
 
 
 #define CHECK_RESULT(a,b)   do{if(a=b)  {    \
-                            SERIAL_DB.print(__FILE__);    \
-                            SERIAL_DB.print(__LINE__);   \
-                            SERIAL_DB.print(" error code =");  \
-                            SERIAL_DB.println(a);                   \
-                            return a;   \
-                            }}while(0)
+            SERIAL_DB.print(__FILE__);    \
+            SERIAL_DB.print(__LINE__);   \
+            SERIAL_DB.print(" error code =");  \
+            SERIAL_DB.println(a);                   \
+            return a;   \
+        }}while(0)
 
 #endif
 
@@ -159,66 +158,66 @@ typedef enum
 
 #define UPDATE_FLAG                         1<<6
 
-class MCP9600_IIC_OPRTS
-{
-    public:
-        void IIC_begin(){Wire.begin();}
-        err_t IIC_write_byte(u8 reg,u8 byte);
-        err_t IIC_read_byte(u8 reg,u8* byte);
-        void set_iic_addr(u8 IIC_ADDR);
-        err_t IIC_read_16bit(u8 start_reg,u16 *value);
-        err_t IIC_write_16bit(u8 reg,u16 value);
-        err_t IIC_read_bytes(u8 start_reg,u8 *data,u32 data_len);
-    private:
-        u8 _IIC_ADDR;
+class MCP9600_IIC_OPRTS {
+  public:
+    void IIC_begin() {
+        Wire.begin();
+    }
+    err_t IIC_write_byte(u8 reg, u8 byte);
+    err_t IIC_read_byte(u8 reg, u8* byte);
+    void set_iic_addr(u8 IIC_ADDR);
+    err_t IIC_read_16bit(u8 start_reg, u16* value);
+    err_t IIC_write_16bit(u8 reg, u16 value);
+    err_t IIC_read_bytes(u8 start_reg, u8* data, u32 data_len);
+  private:
+    u8 _IIC_ADDR;
 };
 
 
-class MCP9600:public MCP9600_IIC_OPRTS
-{
-    public:
-        MCP9600(u8 IIC_ADDR=DEFAULT_IIC_ADDR);
-        ~MCP9600(){};
-        err_t init(u8 therm_type);
-        err_t read_version(u16 *ver);
-        
-        err_t read_hot_junc(float *value);
-        err_t read_junc_temp_delta(float *value);
-        err_t read_cold_junc(float *value);
-        err_t read_ADC_data(u8* data,u32 data_len);      
-        err_t read_status(u8* byte);
+class MCP9600: public MCP9600_IIC_OPRTS {
+  public:
+    MCP9600(u8 IIC_ADDR = DEFAULT_IIC_ADDR);
+    ~MCP9600() {};
+    err_t init(u8 therm_type);
+    err_t read_version(u16* ver);
 
-        err_t set_therm_cfg(u8 set_byte);
-        err_t read_therm_cfg(u8* byte);
-        err_t set_therm_type(u8 set_byte);
-        err_t set_filt_coefficients(u8 set_byte);
+    err_t read_hot_junc(float* value);
+    err_t read_junc_temp_delta(float* value);
+    err_t read_cold_junc(float* value);
+    err_t read_ADC_data(u8* data, u32 data_len);
+    err_t read_status(u8* byte);
 
-        err_t set_dev_cfg(u8 set_byte);
-        err_t read_dev_cfg(u8* byte);
-        err_t set_sensor_mode(u8 set_byte);
-        err_t set_burst_mode_samp(u8 set_byte);
-        err_t set_ADC_meas_resolution(u8 set_byte);
-        err_t set_cold_junc_resolution(u8 set_byte);
+    err_t set_therm_cfg(u8 set_byte);
+    err_t read_therm_cfg(u8* byte);
+    err_t set_therm_type(u8 set_byte);
+    err_t set_filt_coefficients(u8 set_byte);
 
-        err_t set_alert_limit(u8 alert_num,u16 value);
-        err_t set_alert_hys(u8 alert_num,u16 value);
+    err_t set_dev_cfg(u8 set_byte);
+    err_t read_dev_cfg(u8* byte);
+    err_t set_sensor_mode(u8 set_byte);
+    err_t set_burst_mode_samp(u8 set_byte);
+    err_t set_ADC_meas_resolution(u8 set_byte);
+    err_t set_cold_junc_resolution(u8 set_byte);
 
-        
-        err_t set_alert_cfg(u8 alert_num,u8 set_byte);
-        err_t read_alert_cfg(u8 alert_num,u8 *byte);
+    err_t set_alert_limit(u8 alert_num, u16 value);
+    err_t set_alert_hys(u8 alert_num, u16 value);
 
-        err_t clear_int_flag(u8 alert_num);
-        err_t set_alert_for_TH_or_TC(u8 alert_num,u8 set_byte);
-        err_t set_alert_limit_direction(u8 alert_num,u8 set_byte);
-        err_t set_alert_bit(u8 alert_num,u8 set_byte);
-        err_t set_alert_mode_bit(u8 alert_num,u8 set_byte);
-        err_t set_alert_enable(u8 alert_num,u8 set_byte);
 
-        u16 covert_temp_to_reg_form(float temp);
-        
-        err_t check_data_update(bool *stat);
-        err_t read_INT_stat(u8 *stat);
-    private:
+    err_t set_alert_cfg(u8 alert_num, u8 set_byte);
+    err_t read_alert_cfg(u8 alert_num, u8* byte);
+
+    err_t clear_int_flag(u8 alert_num);
+    err_t set_alert_for_TH_or_TC(u8 alert_num, u8 set_byte);
+    err_t set_alert_limit_direction(u8 alert_num, u8 set_byte);
+    err_t set_alert_bit(u8 alert_num, u8 set_byte);
+    err_t set_alert_mode_bit(u8 alert_num, u8 set_byte);
+    err_t set_alert_enable(u8 alert_num, u8 set_byte);
+
+    u16 covert_temp_to_reg_form(float temp);
+
+    err_t check_data_update(bool* stat);
+    err_t read_INT_stat(u8* stat);
+  private:
 
 };
 
