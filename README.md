@@ -1,4 +1,4 @@
-Grove - I2C Thermocouple Amplifier(MCP9600)
+Grove - I2C Thermocouple Amplifier(MCP9600)  [![Build Status](https://travis-ci.com/Seeed-Studio/Seeed_MCP9600.svg?branch=master)](https://travis-ci.com/Seeed-Studio/Seeed_MCP9600)
 ==============
 
 
