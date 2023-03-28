@@ -160,26 +160,28 @@ typedef enum {
 
 class MCP9600_IIC_OPRTS {
   public:
-    void IIC_begin(u32 frequency = 0) {
+    void IIC_begin() {
         Wire.begin();
-        if (frequency != 0) Wire.setClock(frequency);
+        if (_IIC_FREQUENCY != 0) Wire.setClock(_IIC_FREQUENCY);
     }
     err_t IIC_write_byte(u8 reg, u8 byte);
     err_t IIC_read_byte(u8 reg, u8* byte);
     void set_iic_addr(u8 IIC_ADDR);
+    void set_iic_frequency(u32 IIC_FREQUENCY);
     err_t IIC_read_16bit(u8 start_reg, u16* value);
     err_t IIC_write_16bit(u8 reg, u16 value);
     err_t IIC_read_bytes(u8 start_reg, u8* data, u32 data_len);
   private:
     u8 _IIC_ADDR;
+    u32 _IIC_FREQUENCY;
 };
 
 
 class MCP9600: public MCP9600_IIC_OPRTS {
   public:
-    MCP9600(u8 IIC_ADDR = DEFAULT_IIC_ADDR);
+    MCP9600(u8 IIC_ADDR = DEFAULT_IIC_ADDR, u32 IIC_FREQUENCY = 0);
     ~MCP9600() {};
-    err_t init(u8 therm_type, u32 frequency = 0);
+    err_t init(u8 therm_type);
     err_t read_version(u16* ver);
 
     err_t read_hot_junc(float* value);

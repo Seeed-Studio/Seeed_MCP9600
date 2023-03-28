@@ -32,8 +32,9 @@
 #include "Seeed_MCP9600.h"
 
 
-MCP9600::MCP9600(u8 IIC_ADDR) {
+MCP9600::MCP9600(u8 IIC_ADDR, u32 IIC_FREQUENCY) {
     set_iic_addr(IIC_ADDR);
+    set_iic_frequency(IIC_FREQUENCY);
 }
 
 
@@ -42,10 +43,10 @@ MCP9600::MCP9600(u8 IIC_ADDR) {
     @param frequency
     @return 0 if successed.
  * */
-err_t MCP9600::init(u8 therm_type, u32 frequency) {
+err_t MCP9600::init(u8 therm_type) {
     err_t ret = NO_ERROR;
     u16 ver;
-    IIC_begin(frequency);
+    IIC_begin();
     ret = read_version(&ver);
     if (!ret) {
         Serial.print("version =");
@@ -618,3 +619,6 @@ void MCP9600_IIC_OPRTS::set_iic_addr(u8 IIC_ADDR) {
     _IIC_ADDR = IIC_ADDR;
 }
 
+void MCP9600_IIC_OPRTS::set_iic_frequency(u32 IIC_FREQUENCY) {
+    _IIC_FREQUENCY = IIC_FREQUENCY;
+}
