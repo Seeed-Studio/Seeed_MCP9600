@@ -39,12 +39,13 @@ MCP9600::MCP9600(u8 IIC_ADDR) {
 
 /** @brief set type of thermocouple.read version.
     @param therm_type
+    @param frequency
     @return 0 if successed.
  * */
-err_t MCP9600::init(u8 therm_type) {
+err_t MCP9600::init(u8 therm_type, u32 frequency) {
     err_t ret = NO_ERROR;
     u16 ver;
-    IIC_begin();
+    IIC_begin(frequency);
     ret = read_version(&ver);
     if (!ret) {
         Serial.print("version =");
