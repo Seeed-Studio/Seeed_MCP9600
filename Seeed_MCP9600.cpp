@@ -76,17 +76,11 @@ err_t MCP9600::read_version(u16* ver) {
  * */
 err_t MCP9600::read_hot_junc(float* value) {
     *value = 0;
-    u16 read_value = 0;
-    if (IIC_read_16bit(HOT_JUNCTION_REG_ADDR, &read_value)) {
+    s16 read_value = 0;
+    if (IIC_read_16bit(HOT_JUNCTION_REG_ADDR, (u16*)&read_value)) {
         return ERROR_COMM;
     }
-    // Serial.print("read hot junc value=");
-    // Serial.println(read_value,HEX);
-    if (read_value & 0x8000) {
-        *value = (read_value >> 8) * 16.0 + (read_value & 0x00ff) / 16.0 - 4096.0;
-    } else {
-        *value = (read_value >> 8) * 16.0 + (read_value & 0x00ff) / 16.0;
-    }
+    *value = (float)read_value / 16.0f;
     return NO_ERROR;
 }
 
@@ -97,15 +91,11 @@ err_t MCP9600::read_hot_junc(float* value) {
  * */
 err_t MCP9600::read_junc_temp_delta(float* value) {
     *value = 0;
-    u16 read_value = 0;
-    if (IIC_read_16bit(JUNCTION_TEMP_DELTA_REG_ADDR, &read_value)) {
+    s16 read_value = 0;
+    if (IIC_read_16bit(JUNCTION_TEMP_DELTA_REG_ADDR, (u16*)&read_value)) {
         return ERROR_COMM;
     }
-    if (read_value & 0x8000) {
-        *value = (read_value >> 8) * 16.0 + (read_value & 0x00ff) / 16.0 - 4096.0;
-    } else {
-        *value = (read_value >> 8) * 16.0 + (read_value & 0x00ff) / 16.0;
-    }
+    *value = (float)read_value / 16.0f;
     return NO_ERROR;
 }
 
@@ -115,17 +105,11 @@ err_t MCP9600::read_junc_temp_delta(float* value) {
  * */
 err_t MCP9600::read_cold_junc(float* value) {
     *value = 0;
-    u16 read_value = 0;
-    if (IIC_read_16bit(COLD_JUNCTION_TEMP_REG_ADDR, &read_value)) {
+    s16 read_value = 0;
+    if (IIC_read_16bit(COLD_JUNCTION_TEMP_REG_ADDR, (u16*)&read_value)) {
         return ERROR_COMM;
     }
-
-
-    if (read_value & 0xf000) {
-        *value = (read_value >> 8) * 16.0 + (read_value & 0x00ff) / 16.0 - 4096;
-    } else {
-        *value = (read_value >> 8) * 16.0 + (read_value & 0x00ff) / 16.0;
-    }
+    *value = (float)read_value / 16.0f;
     return NO_ERROR;
 }
 
