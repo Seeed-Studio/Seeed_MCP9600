@@ -52,9 +52,7 @@ err_t MCP9600::init(u8 therm_type) {
         Serial.print("version =");
         Serial.println(ver, HEX);
     }
-    if (ret = set_therm_type(therm_type)) {
-        return ret;
-    }
+    ret = set_therm_type(therm_type);
     return ret;
 }
 
