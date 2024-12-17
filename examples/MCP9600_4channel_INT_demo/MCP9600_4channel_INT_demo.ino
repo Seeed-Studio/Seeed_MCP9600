@@ -31,7 +31,9 @@
 
 #include "Seeed_MCP9600.h"
 
-#ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
+#ifdef SEEED_XIAO_M0
+    #define SERIAL Serial
+#elif defined(ARDUINO_SAMD_VARIANT_COMPLIANCE)
     #define SERIAL SerialUSB
 #else
     #define SERIAL Serial
@@ -43,8 +45,8 @@ MCP9600 sensor;
 
 
  * */
-err_t sensor_INT_config() {
-    err_t ret = NO_ERROR;
+mcp_err_t sensor_INT_config() {
+    mcp_err_t ret = NO_ERROR;
     CHECK_RESULT(ret, sensor.set_filt_coefficients(FILT_MID));
 
     for (int i = 0; i < 4; i++) {
@@ -79,8 +81,8 @@ err_t sensor_INT_config() {
 }
 
 
-err_t get_temperature(float* value) {
-    err_t ret = NO_ERROR;
+mcp_err_t get_temperature(float* value) {
+    mcp_err_t ret = NO_ERROR;
     float hot_junc = 0;
     float junc_delta = 0;
     float cold_junc = 0;
